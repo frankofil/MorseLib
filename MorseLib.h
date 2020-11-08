@@ -22,7 +22,5 @@
 // code that handles digital and analog sending as well as non-blocking digital
 // sending
 #include "utility/MorseOutput.h"
-// helping functions when dealing with potentiometers, buttons, etc
-#include "utility/HardwareInterractions.h"
 
 #endif
