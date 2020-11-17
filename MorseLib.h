@@ -1,5 +1,5 @@
 /*
-  MorseLib version 1.2.1
+  MorseLib version 1.2.2
 
   Author: Franciszek Myslek [frm20]
   Module: CS12020 - Introduction to Programming
@@ -22,5 +22,7 @@
 // code that handles digital and analog sending as well as non-blocking digital
 // sending
 #include "utility/MorseOutput.h"
+// code that handles morse code input from digital pin (button, etc)
+#include "utility/MorseInput.h"
 
 #endif

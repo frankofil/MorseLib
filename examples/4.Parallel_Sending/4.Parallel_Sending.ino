@@ -26,7 +26,7 @@ void loop() {
     digitalSender.send_morse_digital_parallel(message);
   else
     Serial.println("1st process done");
-
+  // send fast morse using digital output without blocking other processes
   if(!fastDigitalSender.fully_send())
     fastDigitalSender.send_morse_digital_parallel(message);
   else

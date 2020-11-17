@@ -1,19 +1,24 @@
 #include  "../MorseLib.h"
 
 
-const int alphaLen = 36; // length of alphabet
+const int alphaLen = 54; // length of alphabet
 const int numStart = 26; // start of numbers in a table
+const int specialStart = 35;
 // Morse Alphabet
 const String morseTable[alphaLen] =
   {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---",
    "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
    "..-", "...-", ".--", "-..-", "-.--", "--..", "-----", ".----", "..---",
-   "...--", "....-", ".....", "-....", "--...", "---..", "----."};
+   "...--", "....-", ".....", "-....", "--...", "---..", "----.", ".-.-.-",
+   "--..--", "..--..", ".----.", "-.-.--", "-..-.", "-.--.", "-.--.-", ".-...",
+   "---...", "-.-.-.", "-...-", ".-.-.", "-....-", "..--.-", ".-..-.",
+   "...-..-", ".--.-."};
 // English Alphabet
 const char letterTable[alphaLen] =
   {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3',
-   '4', '5', '6', '7', '8', '9'};
+   '4', '5', '6', '7', '8', '9', '.', ',', '?', 39, '!', '/', '(', ')', '&',
+   ':', ';', '=', '+', '-', '_', '"', '$', '@'};
 
 
 // lowercase letters to uppercase
@@ -33,22 +38,26 @@ String char2morse(char character){
     return morseTable[character - 65];
   else if(character >= '0' && character <= '9')
     return morseTable[numStart + character - '0'];
-  else
-    return "........";
+  else{
+    for(int i = specialStart - 1; i < alphaLen; i++)
+      if(character == letterTable[i])
+        return morseTable[i];
+  }
+  return "........";
 }
 
 // turn morse character into letter equivalent
 char morse2char(String morseChar){
   if(morseChar == "........")
-    return '?';
+    return '*';
   else if(morseChar == " ")
     return ' ';
 
   int i = 0;
   while(morseTable[i] != morseChar && i < alphaLen - 1){
     i++;
-    if(i > alphaLen - 1)
-      return '?';
+    if(i == alphaLen - 1 && morseTable[i] != morseChar)
+      return '*';
   }
 
   return letterTable[i];

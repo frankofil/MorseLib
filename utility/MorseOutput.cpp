@@ -86,6 +86,20 @@ void Sender::send_morse_analog(String message){
   ifDone = true;
 }
 
+// send normal string digitally but in loop function to
+// be able to do other tasks in parallel
+void Sender::send_morse_digital_parallel(String message){
+  message = string2morse(message);
+
+  if(msgPointer != message.length()){
+    if(msgPointer == message.length() - 1 && lastState == LOW) // end of message
+      ifDone = true;
+
+    if(if_should_sent_impuls())
+      send_morse_d(message);
+    }
+}
+
 // checking function if should sent impuls ON / OFF
 boolean Sender::if_should_sent_impuls(){
   currentMilis = millis();
@@ -133,18 +147,4 @@ void Sender::send_morse_d(String msg){
 
   lastSendMilis = millis();
   setWaitingTime(msg[msgPointer]);
-}
-
-// send normal string digitally but in loop function to
-// be able to do other tasks in parallel
-void Sender::send_morse_digital_parallel(String message){
-  message = string2morse(message);
-
-  if(msgPointer != message.length()){
-    if(msgPointer == message.length() - 1 && lastState == LOW) // end of message
-      ifDone = true;
-
-    if(if_should_sent_impuls())
-      send_morse_d(message);
-    }
 }

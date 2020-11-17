@@ -38,7 +38,7 @@ public:
   // send normal string through analog output (Mono Jack)
   void send_morse_analog(String message);
 
-  // send normal string digitally but in loop function to
+  // send normal string digitally (in a loop) to
   // be able to do other tasks in parallel
   void send_morse_digital_parallel(String message);
 };
