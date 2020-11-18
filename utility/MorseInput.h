@@ -24,7 +24,7 @@ class Receiver{
     Receiver(int pin, int speed = DEFAULTSPEED);
 
     // get one morse character at a time - '.' or '-'or ' ' or '/'
-    bool get_morse_input();
+    bool get_morse_input_digital();
 };
 
 #endif

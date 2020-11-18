@@ -17,7 +17,7 @@ void setup() {
   int lastSpace = 0; // last / or space that we have seen
   int pos = -1; // current end of morse input string
 
-  while(!r.get_morse_input()){ // keeps running if the message is not over
+  while(!r.get_morse_input_digital()){ // keeps running if the message is not over
     last = r.msg[r.msg.length() - 1]; //updating last
     pos = r.msg.length() - 1; // updating pos
 

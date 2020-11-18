@@ -6,7 +6,7 @@ Receiver::Receiver(int pin, int speed){
   this->msg = "";
 }
 
-bool Receiver::get_morse_input(){
+bool Receiver::get_morse_input_digital(){
   currentState = digitalRead(inputPin);
 
   // wait for the first input

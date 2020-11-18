@@ -1,5 +1,5 @@
 /*
-  MorseLib version 1.2.2
+  MorseLib version 1.2.3
 
   Author: Franciszek Myslek [frm20]
   Module: CS12020 - Introduction to Programming
