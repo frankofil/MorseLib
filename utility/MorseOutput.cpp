@@ -1,11 +1,27 @@
 #include  "../MorseLib.h"
 
 // creating Sender Object
-Sender::Sender(int pin, int dotSpeed){
-  this->outputPin = pin;
+Sender::Sender(port p, int dotSpeed){
+  this->outputPin = p.pin;
+  this->source = p.source;
+  this->state = p.state;
+  this->frequency = p.frequency;
+
   this->dotRate = dotSpeed;
 
   pinMode(outputPin, OUTPUT);
+}
+
+// send message based on port
+void Sender::send_message(String msg){
+  if(this->state == true){
+    if(this->source == "DIGITAL")
+      send_morse_digital(msg);
+    else if(this->source == "ANALOG")
+      send_morse_analog(msg);
+    else if(this->source == "SERIAL")
+      Serial.print(string2morse(msg));
+  }
 }
 
 // send normal string through digital output
@@ -48,7 +64,6 @@ void Sender::send_morse_digital(String message){
 
 // send normal string through analog output (Mono Jack)
 void Sender::send_morse_analog(String message){
-  int freq = 440;
 
   String morseMsg = string2morse(message);
 
@@ -56,12 +71,12 @@ void Sender::send_morse_analog(String message){
   for(int i = 0; i < len; i++){
     switch (morseMsg[i]){
       case '.':
-        tone(outputPin, freq);
+        tone(outputPin, this->frequency);
         delay(dotRate);
         noTone(outputPin);
         break;
       case '-':
-        tone(outputPin, freq);
+        tone(outputPin, this->frequency);
         delay(3 * dotRate);
         noTone(outputPin);
         break;
@@ -75,7 +90,7 @@ void Sender::send_morse_analog(String message){
         break;
       default: // ERROR
         for(int i = 0; i < 20; i++){
-            tone(outputPin, freq);
+            tone(outputPin, this->frequency);
             delay(dotRate / 3);
             noTone(outputPin);
             delay(dotRate / 3);

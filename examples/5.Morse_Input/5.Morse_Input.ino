@@ -3,12 +3,13 @@
 // define input button pin
 #define BUTTON 3
 
+port btn = {"Button", BUTTON, INPUT, "DIGITAL", true, HIGH, 0};
 //create digital receiver
-Receiver r = Receiver(BUTTON);
+Receiver r = Receiver(btn);
 
 void setup() {
   // set button pin as input
-  pinMode(BUTTON, INPUT);
+  pinMode(btn.pin, btn.mode);
 
   // Setup serial communication to see the result
   Serial.begin(9600);
@@ -17,7 +18,7 @@ void setup() {
   int lastSpace = 0; // last / or space that we have seen
   int pos = -1; // current end of morse input string
 
-  while(!r.get_morse_input_digital()){ // keeps running if the message is not over
+  while(!r.get_message()){ // keeps running if the message is not over
     last = r.msg[r.msg.length() - 1]; //updating last
     pos = r.msg.length() - 1; // updating pos
 
@@ -28,6 +29,7 @@ void setup() {
       Serial.println(morse2string(r.msg));
     }
   }
+
   // after end of connection shows full received message
   Serial.print("Final result is: ");
   Serial.println(morse2string(r.msg));

@@ -1,9 +1,38 @@
 #include  "../MorseLib.h"
 
-Receiver::Receiver(int pin, int speed){
-  this->inputPin = pin;
+Receiver::Receiver(port p, int speed){
+  this->inputPin = p.pin;
+  this->source = p.source;
+  this->state = p.state;
+  this->frequency = p.frequency;
+
   this->timeUnit = speed;
   this->msg = "";
+}
+
+bool Receiver::get_message(){
+  if (this->source == "DIGITAL")
+    return get_morse_input_digital();
+  else if (this->source == "SERIAL")
+    get_morse_serial();
+  return false;
+}
+
+void Receiver::get_morse_serial(){
+  while(!Serial.available()){;}
+  String tempMsg = Serial.readString();
+  bool morse = true;
+
+  for(int i = 0; i < tempMsg.length(); i++)
+      if(!(tempMsg[i] == '.' || tempMsg[i] == '-'
+          || tempMsg[i] == ' ' || tempMsg[i] == '/'))
+            morse = false;
+
+
+  if(this->msg.length() != 0)
+    this->msg += " ";
+  if(morse)
+    this->msg += tempMsg;
 }
 
 bool Receiver::get_morse_input_digital(){
